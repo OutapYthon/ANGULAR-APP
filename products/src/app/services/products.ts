@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  prodcuts = [
-    {id:1, name: "MacBook", price : 22999, selected : true},
-    {id:2, name: "Iphone 16", price : 15200, selected : false},
-    {id:3, name: "Apple Watch", price : 3200, selected : true}
-  ]
-  constructor() {
+
+  constructor(private http:HttpClient) {
 
   }
-  getAllProducts(){
-    return this.prodcuts
+  getAllProducts() : Observable<any>{
+    return this.http.get("http://localhost:8083/products")
   }
   deleteProduct(product:any){
-    this.prodcuts=this.prodcuts.filter(p=>p.id != product.id);
+    return this.http.delete("http://localhost:8083/products/"+product.id)
   }
 }
